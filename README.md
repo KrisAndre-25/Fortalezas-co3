@@ -23,23 +23,6 @@
 
 </div>
 
----
-
-## 📖 Tabla de Contenidos
-
-- [¿Qué es Fortalezas Co³?](#-qué-es-fortalezas-co³)
-- [Características Principales](#-características-principales)
-- [Stack Tecnológico](#️-stack-tecnológico)
-- [Arquitectura del Proyecto](#-arquitectura-del-proyecto)
-- [Flujo de la Aplicación](#-flujo-de-la-aplicación)
-- [Instalación y Uso](#-instalación-y-uso)
-- [Diseño y Experiencia de Usuario](#-diseño-y-experiencia-de-usuario)
-- [Rendimiento](#-rendimiento)
-- [Equipo](#-equipo)
-- [Licencia](#-licencia)
-
----
-
 ## 🎯 ¿Qué es Fortalezas Co³?
 
 **Fortalezas Co³** es una plataforma web premium que digitaliza el set físico de tarjetas de fortalezas, transformándolo en una experiencia interactiva inmersiva pensada para:
@@ -49,20 +32,6 @@
 - 🏢 **Consultoría organizacional** — Herramienta de apoyo para coaches y consultores
 
 La interfaz combina glassmorphism, animaciones de partículas en tiempo real y una arquitectura completamente orientada a datos (*data-driven UI*), garantizando una experiencia fluida y visualmente impactante sin sacrificar rendimiento.
-
----
-
-## ✨ Características Principales
-
-| Característica | Descripción |
-|---|---|
-| 🌊 **Partículas en tiempo real** | Motor de simulación matemática sobre HTML5 Canvas con impacto mínimo de CPU |
-| 🪟 **Glassmorphism** | Sistema visual coherente con transparencias, blur y profundidad |
-| 📱 **Mobile First** | Layouts fluidos optimizados para carga instantánea en dispositivos móviles |
-| 🎴 **Motor de tarjetas** | Interacción dinámica e individual por tarjeta con estados y animaciones |
-| 📊 **Data-driven UI** | Toda la lógica de fortalezas y categorías proviene de estructuras JSON desacopladas |
-| ♿ **Accesibilidad** | HTML5 semántico estructurado para lectores de pantalla y navegación por teclado |
-| 🔐 **Login inmersivo** | Gateway de seguridad con pantalla de entrada experiencial |
 
 ---
 
@@ -148,45 +117,6 @@ Cada vista carga los datos necesarios desde los JSON de `/data/` y renderiza din
 
 - Navegador moderno con soporte para ES6+, CSS Grid y Canvas API
 - Servidor HTTP local o acceso directo al sistema de archivos
-
-### Inicio rápido
-
-```bash
-# 1. Clonar el repositorio
-git clone https://github.com/KrisAndre-25/Fortalezas-co3.git
-
-# 2. Ingresar al directorio
-cd Fortalezas-co3
-
-# 3. Levantar un servidor local
-# Opción A — Python (incluido en la mayoría de sistemas):
-python -m http.server 3000
-
-# Opción B — Node.js con npx:
-npx serve .
-
-# Opción C — VS Code: instalar la extensión "Live Server" y abrir index.html
-
-# 4. Abrir en el navegador
-http://localhost:3000
-```
-
-### Deployment
-
-El proyecto es completamente estático — compatible con cualquier hosting de archivos:
-
-```bash
-# Netlify (drag & drop o CLI)
-netlify deploy --dir .
-
-# GitHub Pages
-# Activar desde Settings → Pages → Deploy from branch main
-
-# Vercel
-vercel --prod
-```
-
----
 
 ## 🎨 Diseño y Experiencia de Usuario
 
