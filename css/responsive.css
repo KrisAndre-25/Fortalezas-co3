@@ -1,0 +1,135 @@
+/* ── RESPONSIVE SYSTEM ── */
+
+/* Home card layout */
+.cards-stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.cards-arc {
+  display: flex;
+  align-items: flex-end;
+  gap: 20px;
+  padding: 40px;
+  position: relative;
+}
+
+/* Category grid */
+.category-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 24px;
+}
+
+@media (max-width: 1024px) {
+  .cards-arc { gap: 14px; }
+  .category-grid { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 768px) {
+  .cards-arc {
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 16px;
+    align-items: center;
+  }
+  .category-card {
+    min-width: 140px !important;
+    min-height: 170px !important;
+  }
+  .category-grid {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
+  }
+}
+
+@media (max-width: 480px) {
+  .category-grid {
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+  }
+  .virtue-card .virtue-title { font-size: 15px; }
+}
+
+/* Card detail layout */
+.card-detail-layout {
+  display: grid;
+  grid-template-columns: 1fr 1.6fr;
+  gap: 32px;
+  height: 100%;
+  overflow: hidden;
+}
+
+@media (max-width: 900px) {
+  .card-detail-layout {
+    grid-template-columns: 1fr;
+    overflow-y: auto;
+  }
+}
+
+/* Navigation */
+.page-nav {
+  position: absolute;
+  top: 24px;
+  left: 24px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+/* Content scroll */
+.content-scroll {
+  height: calc(100vh - 140px);
+  overflow-y: auto;
+  padding-right: 8px;
+}
+
+@media (max-width: 768px) {
+  .content-scroll {
+    height: calc(100vh - 120px);
+  }
+  .page-nav { top: 16px; left: 16px; }
+}
+
+/* Login */
+.login-container {
+  max-width: 420px;
+  width: 90%;
+  margin: 0 auto;
+}
+
+/* Home title area */
+.home-title-area {
+  text-align: center;
+  padding-top: 20px;
+}
+
+/* Virtue scatter layout */
+.virtues-scatter {
+  position: relative;
+  width: 100%;
+  flex: 1;
+  min-height: 400px;
+}
+
+/* On small screens, use grid for virtue scatter */
+@media (max-width: 600px) {
+  .virtues-scatter {
+    position: static;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    padding: 16px;
+  }
+  .virtue-scatter-item {
+    position: static !important;
+    transform: none !important;
+  }
+}

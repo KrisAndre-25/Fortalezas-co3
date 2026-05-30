@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversaciones de Fortalezas Co³</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep:    #0D0824;
+    --violet:  #5B35B5;
+    --mid:     #7C3AED;
+    --glow:    #A78BFA;
+    --lav:     #C4B5FD;
+    --pink:    #D946EF;
+    --teal:    #2DD4BF;
+    --white:   #FFFFFF;
+    --muted:   rgba(255,255,255,0.45);
+  }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Outfit', sans-serif;
+    background: var(--deep);
+    color: var(--white);
+    overflow-x: hidden;
+  }
+
+  /* ── FIXED NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 56px;
+    backdrop-filter: blur(16px);
+    background: rgba(13,8,36,0.6);
+    border-bottom: 1px solid rgba(196,181,253,0.08);
+  }
+  .nav-logo { display: flex; align-items: center; gap: 10px; }
+  .nav-logo svg { width: 28px; }
+  .nav-logo-text { font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase; color: var(--lav); }
+  .nav-cta {
+    padding: 10px 24px;
+    background: linear-gradient(135deg, var(--violet), var(--mid));
+    border: none; border-radius: 100px;
+    color: var(--white); font-family: 'Outfit', sans-serif;
+    font-size: 13px; font-weight: 400; letter-spacing: 0.08em;
+    cursor: pointer; transition: transform 0.2s, box-shadow 0.3s;
+    box-shadow: 0 4px 24px rgba(91,53,181,0.4);
+    text-decoration: none;
+  }
+  .nav-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 32px rgba(91,53,181,0.6); }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; min-height: 100vh;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    padding: 120px 56px 80px;
+    overflow: hidden;
+    text-align: center;
+  }
+
+  canvas#hero-canvas {
+    position: absolute; inset: 0; z-index: 0; pointer-events: none;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 40%, rgba(91,53,181,0.3) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 80% at 10% 80%, rgba(124,58,237,0.15) 0%, transparent 50%),
+      radial-gradient(ellipse 50% 40% at 90% 20%, rgba(167,139,250,0.12) 0%, transparent 50%),
+      linear-gradient(180deg, #0D0824 0%, #150B35 50%, #0D0824 100%);
+  }
+
+  /* Floating blobs */
+  .hero-blob { position: absolute; border-radius: 50%; filter: blur(100px); z-index: 0; }
+  .hero-blob-1 { width: 600px; height: 600px; top: -200px; left: -200px; background: rgba(91,53,181,0.2); animation: drift1 20s ease-in-out infinite alternate; }
+  .hero-blob-2 { width: 400px; height: 400px; bottom: -100px; right: -100px; background: rgba(167,139,250,0.15); animation: drift2 16s ease-in-out infinite alternate; }
+  @keyframes drift1 { to { transform: translate(60px,40px) scale(1.1); } }
+  @keyframes drift2 { to { transform: translate(-40px,-60px) scale(1.08); } }
+
+  .hero-content { position: relative; z-index: 10; max-width: 780px; }
+
+  .hero-badge {
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 20px;
+    background: rgba(196,181,253,0.08);
+    border: 1px solid rgba(196,181,253,0.2);
+    border-radius: 100px;
+    font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase;
+    color: var(--lav); margin-bottom: 32px;
+    opacity: 0; transform: translateY(20px);
+    animation: revUp 0.8s ease forwards 0.4s;
+  }
+  .hero-badge-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--glow); animation: pulse 2s infinite; }
+
+  .hero-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 300;
+    font-size: clamp(48px, 7vw, 88px);
+    line-height: 1.05;
+    color: var(--white);
+    margin-bottom: 28px;
+    opacity: 0; transform: translateY(24px);
+    animation: revUp 1s cubic-bezier(.22,.68,0,1.2) forwards 0.65s;
+  }
+  .hero-title em {
+    font-style: italic;
+    background: linear-gradient(135deg, var(--lav) 0%, var(--pink) 100%);
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+
+  .hero-sub {
+    font-size: 18px; font-weight: 300; color: var(--muted);
+    line-height: 1.6; max-width: 520px; margin: 0 auto 48px;
+    opacity: 0; transform: translateY(20px);
+    animation: revUp 0.9s ease forwards 0.9s;
+  }
+
+  .hero-cta {
+    display: inline-block;
+    padding: 18px 48px;
+    background: linear-gradient(135deg, var(--violet) 0%, var(--mid) 100%);
+    border: none; border-radius: 16px;
+    color: var(--white); font-family: 'Outfit', sans-serif;
+    font-size: 16px; font-weight: 400; letter-spacing: 0.06em;
+    cursor: pointer; text-decoration: none;
+    position: relative; overflow: hidden;
+    box-shadow: 0 12px 48px rgba(91,53,181,0.5), 0 2px 8px rgba(0,0,0,0.4);
+    transition: transform 0.3s cubic-bezier(.22,.68,0,1.2), box-shadow 0.3s;
+    opacity: 0; transform: translateY(18px);
+    animation: revUp 0.8s ease forwards 1.15s;
+  }
+  .hero-cta::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.15) 0%, transparent 50%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .hero-cta:hover { transform: translateY(-3px); box-shadow: 0 20px 64px rgba(91,53,181,0.65); }
+  .hero-cta:hover::before { opacity: 1; }
+
+  /* ── FLOATING CARDS (preview) ── */
+  .cards-float {
+    position: relative; z-index: 10;
+    width: 100%; max-width: 700px;
+    height: 200px;
+    margin: 60px auto 0;
+    perspective: 800px;
+    opacity: 0;
+    animation: revFade 1.2s ease forwards 1.5s;
+  }
+  .float-card {
+    position: absolute;
+    width: 120px; height: 160px;
+    border-radius: 14px;
+    border: 1px solid rgba(255,255,255,0.12);
+    backdrop-filter: blur(8px);
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center; gap: 8px;
+    padding: 16px;
+    cursor: default;
+    animation: floatCard 6s ease-in-out infinite;
+  }
+  .float-card:nth-child(1) { left: 50px;  top: 20px; background: linear-gradient(160deg,rgba(91,53,181,0.7),rgba(45,27,105,0.8)); transform: rotate(-8deg); animation-delay: 0s; }
+  .float-card:nth-child(2) { left: 170px; top: 5px;  background: linear-gradient(160deg,rgba(107,47,160,0.7),rgba(58,16,96,0.8)); transform: rotate(-2deg); animation-delay: 0.8s; }
+  .float-card:nth-child(3) { left: 290px; top: 10px; background: linear-gradient(160deg,rgba(61,31,143,0.7),rgba(31,14,87,0.8)); transform: rotate(3deg); animation-delay: 1.5s; }
+  .float-card:nth-child(4) { left: 410px; top: 0px;  background: linear-gradient(160deg,rgba(27,74,122,0.7),rgba(14,37,69,0.8)); transform: rotate(7deg); animation-delay: 2.2s; }
+  .float-card:nth-child(5) { left: 530px; top: 25px; background: linear-gradient(160deg,rgba(26,107,74,0.7),rgba(10,51,37,0.8)); transform: rotate(12deg); animation-delay: 3s; }
+  @keyframes floatCard {
+    0%, 100% { transform-origin: center bottom; margin-top: 0; }
+    50% { margin-top: -8px; }
+  }
+  .float-card-emoji { font-size: 28px; }
+  .float-card-name { font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; color: rgba(255,255,255,0.6); text-align: center; }
+
+  /* ── STORYTELLING ── */
+  .story {
+    position: relative; z-index: 10;
+    padding: 120px 56px;
+    max-width: 1100px; margin: 0 auto;
+  }
+  .story-label {
+    font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--lav); margin-bottom: 48px; text-align: center;
+  }
+  .story-steps {
+    display: grid; grid-template-columns: 1fr 1fr 1fr;
+    gap: 2px;
+    position: relative;
+  }
+  .story-step {
+    padding: 48px 40px;
+    border: 1px solid rgba(196,181,253,0.1);
+    background: rgba(255,255,255,0.02);
+    transition: background 0.3s, border-color 0.3s;
+    position: relative; overflow: hidden;
+  }
+  .story-step:first-child { border-radius: 20px 0 0 20px; }
+  .story-step:last-child  { border-radius: 0 20px 20px 0; }
+  .story-step:hover { background: rgba(196,181,253,0.05); border-color: rgba(196,181,253,0.25); }
+  .story-step::before {
+    content: '';
+    position: absolute; top: 0; left: 0; right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, var(--violet), var(--glow));
+    transform: scaleX(0); transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+  .story-step:hover::before { transform: scaleX(1); }
+  .step-num {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 64px; font-weight: 300; font-style: italic;
+    color: rgba(196,181,253,0.15);
+    line-height: 1; margin-bottom: 16px;
+    display: block;
+  }
+  .step-title {
+    font-size: 20px; font-weight: 500;
+    margin-bottom: 12px; color: var(--white);
+  }
+  .step-desc {
+    font-size: 14px; font-weight: 300;
+    line-height: 1.7; color: var(--muted);
+  }
+
+  /* ── ROOTS SECTION ── */
+  .roots {
+    padding: 100px 56px;
+    max-width: 1100px; margin: 0 auto;
+    text-align: center;
+  }
+  .roots-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 48px; font-weight: 300;
+    color: var(--white); margin-bottom: 16px;
+  }
+  .roots-sub {
+    font-size: 15px; font-weight: 300;
+    color: var(--muted); margin-bottom: 64px;
+  }
+  .roots-grid {
+    display: grid; grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .root-card {
+    padding: 36px; border-radius: 20px;
+    border: 1px solid rgba(196,181,253,0.1);
+    background: rgba(255,255,255,0.02);
+    text-align: left; transition: transform 0.3s, border-color 0.3s;
+  }
+  .root-card:hover { transform: translateY(-4px); border-color: rgba(196,181,253,0.3); }
+  .root-icon { font-size: 32px; margin-bottom: 16px; }
+  .root-name { font-size: 16px; font-weight: 500; margin-bottom: 10px; color: var(--lav); }
+  .root-desc { font-size: 14px; font-weight: 300; line-height: 1.7; color: var(--muted); }
+
+  /* ── FINAL CTA ── */
+  .final-cta {
+    padding: 120px 56px;
+    text-align: center;
+    position: relative; overflow: hidden;
+  }
+  .final-cta::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 60% 80% at 50% 50%, rgba(91,53,181,0.25) 0%, transparent 70%);
+  }
+  .final-cta-content { position: relative; z-index: 1; max-width: 600px; margin: 0 auto; }
+  .final-cta-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 42px; font-weight: 300;
+    line-height: 1.2; color: var(--white); margin-bottom: 40px;
+  }
+  .final-cta-quote span {
+    background: linear-gradient(135deg, var(--lav), var(--pink));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+  }
+  .final-btn {
+    display: inline-block;
+    padding: 20px 56px;
+    background: linear-gradient(135deg, var(--violet) 0%, var(--mid) 100%);
+    border-radius: 18px; border: none;
+    color: var(--white); font-family: 'Outfit', sans-serif;
+    font-size: 17px; font-weight: 400; letter-spacing: 0.06em;
+    text-decoration: none; cursor: pointer;
+    box-shadow: 0 16px 56px rgba(91,53,181,0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .final-btn:hover { transform: translateY(-4px); box-shadow: 0 24px 72px rgba(91,53,181,0.7); }
+
+  /* ── FOOTER ── */
+  footer {
+    padding: 32px 56px;
+    border-top: 1px solid rgba(196,181,253,0.08);
+    display: flex; align-items: center; justify-content: space-between;
+    font-size: 12px; color: var(--muted); letter-spacing: 0.06em;
+  }
+
+  /* ── KEYFRAMES ── */
+  @keyframes revUp { to { opacity: 1; transform: translateY(0); } }
+  @keyframes revFade { to { opacity: 1; } }
+  @keyframes pulse {
+    0%,100% { opacity: 0.5; transform: scale(1); }
+    50% { opacity: 1; transform: scale(1.5); }
+  }
+
+  @media (max-width: 768px) {
+    nav { padding: 16px 24px; }
+    .hero { padding: 100px 24px 60px; }
+    .story { padding: 80px 24px; }
+    .story-steps { grid-template-columns: 1fr; }
+    .story-step { border-radius: 16px !important; margin-bottom: 2px; }
+    .roots { padding: 60px 24px; }
+    .roots-grid { grid-template-columns: 1fr; }
+    .cards-float { display: none; }
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-logo">
+    <svg viewBox="0 0 28 28" fill="none">
+      <path d="M14 2L25 8.5V19.5L14 26L3 19.5V8.5Z" stroke="rgba(196,181,253,0.7)" stroke-width="1.2" fill="none"/>
+      <circle cx="14" cy="14" r="3.5" fill="rgba(196,181,253,0.8)"/>
+    </svg>
+    <span class="nav-logo-text">Conversaciones de Fortalezas Co<sup style="font-size:8px">3</sup></span>
+  </div>
+  <a href="login.html" class="nav-cta">Comenzar experiencia</a>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <canvas id="hero-canvas"></canvas>
+  <div class="hero-bg"></div>
+  <div class="hero-blob hero-blob-1"></div>
+  <div class="hero-blob hero-blob-2"></div>
+
+  <div class="hero-content">
+    <div class="hero-badge">
+      <div class="hero-badge-dot"></div>
+      Herramienta viva · 63 tarjetas
+    </div>
+
+    <h1 class="hero-title">
+      Conversaciones que<br><em>transforman equipos.</em>
+    </h1>
+
+    <p class="hero-sub">
+      Una plataforma que integra Indagación Apreciativa, Psicología Positiva, Neurociencias y Sabiduría Ancestral de los Andes para activar conversaciones que dan vida.
+    </p>
+
+    <a href="login.html" class="hero-cta">Comenzar experiencia</a>
+  </div>
+
+  <!-- Floating card preview -->
+  <div class="cards-float">
+    <div class="float-card"><div class="float-card-emoji">✨</div><div class="float-card-name">Virtudes</div></div>
+    <div class="float-card"><div class="float-card-emoji">🌱</div><div class="float-card-name">Fortalezas</div></div>
+    <div class="float-card"><div class="float-card-emoji">🌀</div><div class="float-card-name">Caminos Co³</div></div>
+    <div class="float-card"><div class="float-card-emoji">🧠</div><div class="float-card-name">Neurotips</div></div>
+    <div class="float-card"><div class="float-card-emoji">🔥</div><div class="float-card-name">Rituales</div></div>
+  </div>
+</section>
+
+<!-- STORY -->
+<section class="story">
+  <p class="story-label">Cómo funciona</p>
+  <div class="story-steps">
+    <div class="story-step">
+      <span class="step-num">01</span>
+      <div class="step-title">Descubre fortalezas</div>
+      <p class="step-desc">Explora 6 Virtudes y 24 Fortalezas que expresan lo mejor del ser humano en la vida cotidiana. Cada carta revela un poder único.</p>
+    </div>
+    <div class="story-step">
+      <span class="step-num">02</span>
+      <div class="step-title">Activa conversaciones</div>
+      <p class="step-desc">Usa los Caminos Co³ — Conectar, Construir, Concretar — para abrir espacios de diálogo genuino en tu equipo o comunidad.</p>
+    </div>
+    <div class="story-step">
+      <span class="step-num">03</span>
+      <div class="step-title">Genera transformación</div>
+      <p class="step-desc">Cada conversación siembra confianza, despierta propósito y activa cambios duraderos. Una conversación puede cambiarlo todo.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ROOTS -->
+<section class="roots">
+  <h2 class="roots-title">Las raíces que sostienen</h2>
+  <p class="roots-sub">Ciencia, conciencia y sabiduría ancestral entretejidas en cada tarjeta</p>
+  <div class="roots-grid">
+    <div class="root-card">
+      <div class="root-icon">🔍</div>
+      <div class="root-name">Indagación Apreciativa</div>
+      <p class="root-desc">Invita a mirar lo que da vida. Cada conversación construye futuro cuando preguntamos desde lo que funciona.</p>
+    </div>
+    <div class="root-card">
+      <div class="root-icon">🌟</div>
+      <div class="root-name">Psicología Positiva</div>
+      <p class="root-desc">Activa fortalezas humanas y bienestar sostenible. Florecer es encontrar sentido incluso en los desafíos.</p>
+    </div>
+    <div class="root-card">
+      <div class="root-icon">🧠</div>
+      <div class="root-name">Neurociencias Aplicadas</div>
+      <p class="root-desc">Comprende cómo el cerebro responde al reconocimiento y el diálogo genuino, creando nuevas conexiones.</p>
+    </div>
+    <div class="root-card">
+      <div class="root-icon">🏔️</div>
+      <div class="root-name">Sabiduría Ancestral Andina</div>
+      <p class="root-desc">Recuerda lo sagrado de lo cotidiano. Reciprocidad, equilibrio e interconexión de todo lo existente.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FINAL CTA -->
+<section class="final-cta">
+  <div class="final-cta-content">
+    <p class="final-cta-quote">Una conversación puede cambiarlo <span>todo.</span></p>
+    <a href="login.html" class="final-btn">Comenzar experiencia →</a>
+  </div>
+</section>
+
+<footer>
+  <span>Conversaciones de Fortalezas Co³ · Mujer Apreciativa</span>
+  <span>© 2025 Karen Pérez Molina</span>
+</footer>
+
+<script>
+// Hero particles
+const c = document.getElementById('hero-canvas');
+const x = c.getContext('2d');
+function rs(){c.width=window.innerWidth;c.height=document.querySelector('.hero').offsetHeight;}
+rs(); window.addEventListener('resize',rs);
+const pp=[];
+for(let i=0;i<100;i++)pp.push({x:Math.random()*window.innerWidth,y:Math.random()*800,r:Math.random()*1.5+0.3,vx:(Math.random()-.5)*.2,vy:-(Math.random()*.25+.05),a:Math.random()*.3+.05,p:Math.random()*Math.PI*2});
+function ad(){x.clearRect(0,0,c.width,c.height);pp.forEach(p=>{p.x+=p.vx;p.y+=p.vy;p.p+=.012;p.a=Math.sin(p.p)*.12+.15;if(p.y<-5)p.y=c.height+5;x.beginPath();x.arc(p.x,p.y,p.r,0,Math.PI*2);x.fillStyle=`rgba(196,181,253,${p.a})`;x.fill();});requestAnimationFrame(ad);}
+ad();
+</script>
+</body>
+</html>
