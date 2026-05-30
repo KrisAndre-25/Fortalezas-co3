@@ -296,11 +296,10 @@ for (let i = 0; i < 80; i++) particles.push(new Particle());
 function animate() { ctx.clearRect(0, 0, W, H); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
 animate();
 
-// ── LOGIN — REDIRECCIÓN CORREGIDA A INDEX.HTML ──
+// ── LOGIN — REDIRECCIÓN CORREGIDA AL HOME REAL ──
 function handleLogin() {
   const btn = document.getElementById('loginBtn');
   
-  // Evita ejecuciones duplicadas si se hace clic muchas veces
   if (btn.classList.contains('loading')) return;
   
   btn.classList.add('loading');
@@ -310,8 +309,8 @@ function handleLogin() {
     if (overlay) overlay.classList.add('active');
     
     setTimeout(() => {
-      // Solución al error 404: Se redirige al index.html que contiene la estructura del Home
-      window.location.href = 'index.html';
+      // Apuntamos al HOME real que tú diseñaste
+      window.location.href = 'home.html';
     }, 700);
   }, 1400);
 }
