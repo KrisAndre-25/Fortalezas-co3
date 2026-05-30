@@ -1,0 +1,147 @@
+{
+  "categories": [
+    {
+      "id": "virtudes",
+      "title": "Virtudes",
+      "subtitle": "El núcleo de la experiencia",
+      "color": "#6B21A8",
+      "accent": "#A855F7",
+      "gradient": "linear-gradient(135deg, #4C1D95, #7C3AED, #A855F7)",
+      "icon": "✦",
+      "description": "Las virtudes son las cualidades fundamentales del carácter humano que nos permiten florecer y contribuir al bien común.",
+      "subcards": [
+        {
+          "id": "sabiduria",
+          "title": "Sabiduría",
+          "color": "#5B21B6",
+          "gradient": "linear-gradient(135deg, #3B0764, #6D28D9)",
+          "poder": "Comprender el mundo a través de la claridad",
+          "descripcion": "La virtud de la sabiduría reúne fortalezas que nos ayudan a adquirir y aplicar conocimiento para tomar mejores decisiones. Quien la cultiva observa con claridad, aprende de la experiencia y tiene la capacidad de ver más allá de lo evidente.",
+          "pregunta": "¿En qué momento reciente usaste tu conocimiento para guiar a alguien más? ¿Cómo te sentiste en ese rol?",
+          "micropractica": "Esta semana, antes de tomar una decisión importante, dedica 5 minutos a escribir tres perspectivas distintas sobre la situación.",
+          "reflexion": "La sabiduría danza entre la experiencia y la imaginación.",
+          "fortalezas": ["Creatividad", "Curiosidad", "Juicio crítico", "Amor por aprender", "Perspectiva"]
+        },
+        {
+          "id": "coraje",
+          "title": "Coraje",
+          "color": "#7C2D12",
+          "gradient": "linear-gradient(135deg, #7C2D12, #C2410C)",
+          "poder": "Actuar con valentía ante la adversidad",
+          "descripcion": "El coraje es la capacidad de actuar según nuestros valores y objetivos a pesar del miedo, la incertidumbre o la dificultad. No es ausencia de miedo, sino la decisión de avanzar a pesar de él.",
+          "pregunta": "¿Cuándo fue la última vez que hiciste algo que te generaba miedo? ¿Qué aprendiste de esa experiencia?",
+          "micropractica": "Identifica una conversación difícil que hayas estado evitando. Comprométete a tenerla esta semana con honestidad y respeto.",
+          "reflexion": "El coraje no es la ausencia del miedo, sino el juicio de que algo más importante que el miedo merece acción.",
+          "fortalezas": ["Valentía", "Perseverancia", "Honestidad", "Vitalidad"]
+        },
+        {
+          "id": "humanidad",
+          "title": "Humanidad",
+          "color": "#831843",
+          "gradient": "linear-gradient(135deg, #831843, #DB2777)",
+          "poder": "Conectar desde el amor y la empatía",
+          "descripcion": "La humanidad engloba las fortalezas interpersonales de cuidar y relacionarse con otros. Implica dar y recibir amor, ser amable con los demás y tener genuino interés en su bienestar.",
+          "pregunta": "¿Con quién en tu equipo sientes que necesitas fortalecer la conexión? ¿Qué primer paso podrías dar?",
+          "micropractica": "Hoy, expresa gratitud genuina a tres personas de tu entorno. Sé específico sobre qué valoras de cada una.",
+          "reflexion": "En la humanidad reside nuestra mayor fortaleza colectiva.",
+          "fortalezas": ["Amor", "Bondad", "Inteligencia social"]
+        },
+        {
+          "id": "justicia",
+          "title": "Justicia",
+          "color": "#1E3A8A",
+          "gradient": "linear-gradient(135deg, #1E3A8A, #2563EB)",
+          "poder": "Construir comunidades que prosperan juntas",
+          "descripcion": "La justicia incluye fortalezas que hacen posible una vida saludable en comunidad. Implica equidad, liderazgo responsable y la capacidad de trabajar bien como parte de un equipo.",
+          "pregunta": "¿Cómo contribuyes actualmente al sentido de equidad y pertenencia en tu equipo?",
+          "micropractica": "En tu próxima reunión de equipo, asegúrate de que todas las voces sean escuchadas. Invita activamente a quienes suelen quedarse en silencio.",
+          "reflexion": "La justicia comienza cuando elegimos ver al otro como igual.",
+          "fortalezas": ["Trabajo en equipo", "Equidad", "Liderazgo"]
+        },
+        {
+          "id": "templanza",
+          "title": "Templanza",
+          "color": "#064E3B",
+          "gradient": "linear-gradient(135deg, #064E3B, #059669)",
+          "poder": "Gestionar el exceso con equilibrio y gracia",
+          "descripcion": "La templanza es la capacidad de regular los excesos. Incluye fortalezas que nos protegen del desequilibrio y nos permiten actuar con moderación, reflexión y autocontrol.",
+          "pregunta": "¿En qué área de tu vida o trabajo sientes que podrías practicar mayor moderación o pausa antes de actuar?",
+          "micropractica": "Esta semana, practica la pausa consciente: antes de responder a algo que te genere tensión, respira tres veces profundamente.",
+          "reflexion": "La templanza no es restricción, es la elegancia del autodominio.",
+          "fortalezas": ["Perdón", "Humildad", "Prudencia", "Autorregulación"]
+        },
+        {
+          "id": "trascendencia",
+          "title": "Trascendencia",
+          "color": "#78350F",
+          "gradient": "linear-gradient(135deg, #78350F, #D97706)",
+          "poder": "Conectar con algo más grande que uno mismo",
+          "descripcion": "La trascendencia incluye fortalezas que nos conectan con el universo más amplio y proporcionan significado. Son las que nos permiten experimentar asombro, gratitud, esperanza y propósito.",
+          "pregunta": "¿Qué te genera genuino asombro en tu trabajo o en tu vida? ¿Con qué frecuencia te permites experimentarlo?",
+          "micropractica": "Cada mañana esta semana, escribe tres cosas específicas por las que estás agradecido/a en tu trabajo.",
+          "reflexion": "Quien encuentra significado en lo pequeño, descubre lo infinito.",
+          "fortalezas": ["Apreciación de la belleza", "Gratitud", "Esperanza", "Humor", "Espiritualidad"]
+        }
+      ]
+    },
+    {
+      "id": "fortalezas",
+      "title": "Fortalezas",
+      "subtitle": "24 fortalezas de carácter",
+      "color": "#BE185D",
+      "accent": "#EC4899",
+      "gradient": "linear-gradient(135deg, #9D174D, #DB2777, #F472B6)",
+      "icon": "◈",
+      "description": "Las 24 fortalezas de carácter son los caminos concretos hacia la virtud. Cada una es un recurso interior que podemos cultivar y expresar.",
+      "subcards": [
+        { "id": "creatividad", "title": "Creatividad", "color": "#BE185D", "gradient": "linear-gradient(135deg, #9D174D, #DB2777)", "poder": "Generar ideas originales y soluciones novedosas", "descripcion": "La creatividad es la capacidad de pensar en formas nuevas y productivas, encontrar conexiones inesperadas y generar soluciones que no existían antes.", "pregunta": "¿Cuándo fue la última vez que sorprendiste a tu equipo con una idea completamente nueva?", "micropractica": "Dedica 10 minutos diarios a explorar una idea sin juzgarla. Escríbela, dibújala, conéctala con otras.", "reflexion": "La creatividad es inteligencia divirtiéndose.", "fortalezas": [] },
+        { "id": "curiosidad", "title": "Curiosidad", "color": "#7C3AED", "gradient": "linear-gradient(135deg, #5B21B6, #7C3AED)", "poder": "Explorar el mundo con asombro genuino", "descripcion": "La curiosidad es el interés genuino por nuevas experiencias, conocimientos y perspectivas. Es el motor del aprendizaje continuo.", "pregunta": "¿Qué pregunta te has estado haciendo recientemente que aún no has explorado?", "micropractica": "Hoy, pregunta a un colega sobre algo de su vida o trabajo que genuinamente no conozcas.", "reflexion": "La curiosidad es el comienzo de toda sabiduría.", "fortalezas": [] },
+        { "id": "gratitud", "title": "Gratitud", "color": "#D97706", "gradient": "linear-gradient(135deg, #92400E, #D97706)", "poder": "Reconocer y apreciar lo bueno", "descripcion": "La gratitud es la conciencia y apreciación de las cosas buenas en tu vida, expresada tanto internamente como hacia otros.", "pregunta": "¿Qué tres personas en tu entorno laboral han contribuido más a tu crecimiento?", "micropractica": "Escribe una nota de agradecimiento específica a alguien que haya marcado diferencia en tu vida profesional.", "reflexion": "La gratitud convierte lo ordinario en extraordinario.", "fortalezas": [] }
+      ]
+    },
+    {
+      "id": "caminos",
+      "title": "Caminos Co³",
+      "subtitle": "Conectar · Construir · Concretar",
+      "color": "#0E7490",
+      "accent": "#06B6D4",
+      "gradient": "linear-gradient(135deg, #164E63, #0891B2, #22D3EE)",
+      "icon": "⬡",
+      "description": "Los Caminos Co³ son las dimensiones que guían las conversaciones apreciativas hacia la acción transformadora.",
+      "subcards": [
+        { "id": "conectar", "title": "Conectar", "color": "#0E7490", "gradient": "linear-gradient(135deg, #164E63, #0891B2)", "poder": "Crear vínculos auténticos y significativos", "descripcion": "El camino del Conectar invita a los equipos a reconocer sus fortalezas compartidas y crear espacios de confianza y presencia genuina.", "pregunta": "¿Qué haría que tu equipo se sintiera más conectado y seguro para mostrarse tal como es?", "micropractica": "Comienza tu próxima reunión con dos minutos de check-in: cada persona comparte una palabra que describe cómo llega hoy.", "reflexion": "La conexión auténtica es el fundamento de todo lo que construimos juntos.", "fortalezas": [] },
+        { "id": "construir", "title": "Construir", "color": "#1D4ED8", "gradient": "linear-gradient(135deg, #1E3A8A, #2563EB)", "poder": "Co-crear desde las fortalezas del equipo", "descripcion": "El camino del Construir facilita la generación de visiones compartidas y el diseño colaborativo de soluciones desde las fortalezas.", "pregunta": "¿Cuál es la visión que más inspira a tu equipo? ¿Cómo se relaciona con sus fortalezas individuales?", "micropractica": "En equipo, identifiquen tres fortalezas colectivas y discutan cómo amplificarlas en el próximo proyecto.", "reflexion": "Construimos más sólido cuando edificamos sobre lo que ya funciona.", "fortalezas": [] },
+        { "id": "concretar", "title": "Concretar", "color": "#047857", "gradient": "linear-gradient(135deg, #064E3B, #059669)", "poder": "Transformar conversaciones en acciones reales", "descripcion": "El camino del Concretar convierte las insights de las conversaciones apreciativas en compromisos concretos y planes de acción.", "pregunta": "¿Cuál es el primer paso concreto que tu equipo puede dar esta semana para avanzar hacia su visión?", "micropractica": "Define un compromiso específico, medible y alcanzable para los próximos 7 días. Compártelo con tu equipo.", "reflexion": "Las conversaciones transformadoras culminan en acciones que cambian la realidad.", "fortalezas": [] }
+      ]
+    },
+    {
+      "id": "neurotips",
+      "title": "Neurotips",
+      "subtitle": "Neurociencia aplicada",
+      "color": "#0369A1",
+      "accent": "#38BDF8",
+      "gradient": "linear-gradient(135deg, #0C4A6E, #0284C7, #38BDF8)",
+      "icon": "⬟",
+      "description": "Los Neurotips traducen hallazgos de la neurociencia en consejos prácticos para potenciar el aprendizaje, la colaboración y el bienestar.",
+      "subcards": [
+        { "id": "neuroplasticidad", "title": "Neuroplasticidad", "color": "#0369A1", "gradient": "linear-gradient(135deg, #0C4A6E, #0284C7)", "poder": "El cerebro que practica se transforma", "descripcion": "La neuroplasticidad es la capacidad del cerebro de reorganizarse formando nuevas conexiones. Cada nueva práctica, por pequeña que sea, va tallando nuevos caminos neuronales.", "pregunta": "¿Qué nuevo hábito mental estás cultivando actualmente en tu equipo de trabajo?", "micropractica": "Practica una nueva rutina durante 21 días consecutivos. La repetición es la clave de la transformación neuronal.", "reflexion": "No somos prisioneros de nuestros hábitos. Somos arquitectos de nuestro cerebro.", "fortalezas": [] },
+        { "id": "estados", "title": "Estados Óptimos", "color": "#1D4ED8", "gradient": "linear-gradient(135deg, #1E3A8A, #3B82F6)", "poder": "El estado interno determina el rendimiento", "descripcion": "El estado emocional y fisiológico en que nos encontramos determina significativamente nuestra capacidad de pensar, crear y colaborar.", "pregunta": "¿Cómo llegas habitualmente a tus reuniones de equipo? ¿Cómo podrías llegar en un estado más óptimo?", "micropractica": "Antes de tu próxima reunión importante, tómate 3 minutos para respirar conscientemente y visualizar el resultado positivo.", "reflexion": "La mente preparada produce resultados extraordinarios.", "fortalezas": [] }
+      ]
+    },
+    {
+      "id": "rituales",
+      "title": "Prácticas Rituales",
+      "subtitle": "Cultura y comunidad",
+      "color": "#065F46",
+      "accent": "#34D399",
+      "gradient": "linear-gradient(135deg, #064E3B, #059669, #34D399)",
+      "icon": "✿",
+      "description": "Las Prácticas Rituales son el tejido que mantiene viva la cultura del equipo, celebrando logros, cerrando ciclos y abriendo nuevos comienzos.",
+      "subcards": [
+        { "id": "gratitud-ritual", "title": "Ritual de Gratitud", "color": "#065F46", "gradient": "linear-gradient(135deg, #064E3B, #059669)", "poder": "Cultivar apreciación como práctica colectiva", "descripcion": "El ritual de gratitud transforma el reconocimiento en una práctica regular del equipo, fortaleciendo los vínculos y aumentando el sentido de pertenencia.", "pregunta": "¿Qué rituales de reconocimiento ya existen en tu equipo? ¿Cómo podrían potenciarse?", "micropractica": "Instaura un momento semanal de 5 minutos donde cada miembro del equipo reconozca a otro por una contribución específica.", "reflexion": "Los equipos que celebran juntos, crecen juntos.", "fortalezas": [] },
+        { "id": "cierre", "title": "Cierre de Ciclos", "color": "#047857", "gradient": "linear-gradient(135deg, #064E3B, #10B981)", "poder": "Honrar los finales para activar nuevos comienzos", "descripcion": "Los cierres conscientes permiten integrar aprendizajes, soltar lo que ya no sirve y preparar el terreno para lo que viene.", "pregunta": "¿Cómo cierra actualmente tu equipo los proyectos? ¿Qué espacio existe para la reflexión y el aprendizaje?", "micropractica": "Al finalizar un proyecto, realiza una retrospectiva apreciativa: ¿Qué funcionó bien? ¿Qué aprendimos? ¿Qué llevamos al próximo ciclo?", "reflexion": "Todo final honrado se convierte en un comienzo poderoso.", "fortalezas": [] },
+        { "id": "apertura", "title": "Apertura de Ciclos", "color": "#0E7490", "gradient": "linear-gradient(135deg, #164E63, #0891B2)", "poder": "Iniciar con intención y presencia", "descripcion": "Las aperturas rituales establecen el tono y la intención para nuevos períodos, proyectos o fases del equipo.", "pregunta": "¿Cómo te gustaría iniciar el próximo trimestre con tu equipo de una forma memorable e inspiradora?", "micropractica": "Diseña un ritual de inicio para tu próximo proyecto: una pregunta que abra posibilidades, un compromiso compartido, una imagen que inspire.", "reflexion": "El cómo comenzamos determina, en gran medida, el cómo terminamos.", "fortalezas": [] }
+      ]
+    }
+  ]
+}
