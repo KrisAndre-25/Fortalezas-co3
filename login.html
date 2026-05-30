@@ -296,19 +296,35 @@ for (let i = 0; i < 80; i++) particles.push(new Particle());
 function animate() { ctx.clearRect(0, 0, W, H); particles.forEach(p => { p.update(); p.draw(); }); requestAnimationFrame(animate); }
 animate();
 
-// ── LOGIN — redirects to home.html (dashboard) ──
+// ── LOGIN — REDIRECCIÓN CORREGIDA A INDEX.HTML ──
 function handleLogin() {
   const btn = document.getElementById('loginBtn');
+  
+  // Evita ejecuciones duplicadas si se hace clic muchas veces
+  if (btn.classList.contains('loading')) return;
+  
   btn.classList.add('loading');
+  
   setTimeout(() => {
     const overlay = document.getElementById('overlay');
-    overlay.classList.add('active');
+    if (overlay) overlay.classList.add('active');
+    
     setTimeout(() => {
-      window.location.href = 'home.html';
+      // Solución al error 404: Se redirige al index.html que contiene la estructura del Home
+      window.location.href = 'index.html';
     }, 700);
   }, 1400);
 }
-document.addEventListener('keydown', e => { if (e.key === 'Enter') handleLogin(); });
+
+document.addEventListener('keydown', e => { 
+  if (e.key === 'Enter') {
+    // Evita enviar el formulario repetidamente con la tecla enter
+    const btn = document.getElementById('loginBtn');
+    if (!btn.classList.contains('loading')) {
+      handleLogin(); 
+    }
+  }
+});
 </script>
 </body>
 </html>
