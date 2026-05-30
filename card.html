@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Conversaciones de Fortalezas Co³ — Carta</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Outfit:wght@200;300;400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --deep:   #0D0824;
+    --white:  #FFFFFF;
+    --muted:  rgba(255,255,255,0.45);
+    --cat-primary:   #5B35B5;
+    --cat-secondary: #A78BFA;
+    --cat-glow:      rgba(91,53,181,0.4);
+    --cat-border:    rgba(167,139,250,0.22);
+    --cat-text:      #C4B5FD;
+  }
+  [data-cat="virtudes"]   { --cat-primary:#5B35B5; --cat-secondary:#A78BFA; --cat-glow:rgba(91,53,181,0.45); --cat-border:rgba(167,139,250,0.22); --cat-text:#C4B5FD; }
+  [data-cat="fortalezas"] { --cat-primary:#6B2FA0; --cat-secondary:#D946EF; --cat-glow:rgba(107,47,160,0.45); --cat-border:rgba(217,70,239,0.22); --cat-text:#F0ABFC; }
+  [data-cat="caminos"]    { --cat-primary:#1B4A7A; --cat-secondary:#38BDF8; --cat-glow:rgba(27,74,122,0.5); --cat-border:rgba(56,189,248,0.22); --cat-text:#7DD3FC; }
+  [data-cat="neurotips"]  { --cat-primary:#1A4A3E; --cat-secondary:#2DD4BF; --cat-glow:rgba(26,74,62,0.5); --cat-border:rgba(45,212,191,0.22); --cat-text:#5EEAD4; }
+  [data-cat="rituales"]   { --cat-primary:#7A3515; --cat-secondary:#FB923C; --cat-glow:rgba(122,53,21,0.5); --cat-border:rgba(251,146,60,0.22); --cat-text:#FDBA74; }
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  html, body { width: 100%; min-height: 100vh; font-family: 'Outfit', sans-serif; background: var(--deep); color: var(--white); overflow-x: hidden; }
+
+  /* ── BG ── */
+  .bg {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 70% at 50% 30%, var(--cat-glow) 0%, transparent 55%),
+      radial-gradient(ellipse 40% 50% at 10% 80%, rgba(13,8,36,0.9) 0%, transparent 50%),
+      linear-gradient(180deg, #0D0824 0%, #100A2A 100%);
+    transition: background 0.8s;
+  }
+  canvas#ambient { position: fixed; inset: 0; z-index: 1; pointer-events: none; }
+
+  /* Concentric glow rings */
+  .ring {
+    position: fixed; border-radius: 50%;
+    border: 1px solid var(--cat-border);
+    pointer-events: none; z-index: 2;
+    animation: ringPulse 6s ease-in-out infinite;
+    top: 50%; left: 50%;
+  }
+  .ring-1 { width: 300px; height: 300px; transform: translate(-50%,-50%); opacity: 0.12; animation-delay: 0s; }
+  .ring-2 { width: 550px; height: 550px; transform: translate(-50%,-50%); opacity: 0.07; animation-delay: 1.5s; }
+  .ring-3 { width: 800px; height: 800px; transform: translate(-50%,-50%); opacity: 0.04; animation-delay: 3s; }
+  @keyframes ringPulse {
+    0%, 100% { box-shadow: 0 0 0 rgba(0,0,0,0); }
+    50% { box-shadow: 0 0 60px var(--cat-glow); }
+  }
+
+  /* ── HEADER ── */
+  .site-header {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 20px 48px;
+    backdrop-filter: blur(16px);
+    background: rgba(13,8,36,0.6);
+    border-bottom: 1px solid rgba(196,181,253,0.08);
+    opacity: 0; animation: revUp 0.6s ease forwards 0.2s;
+  }
+  .header-logo { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+  .header-logo svg { width: 26px; }
+  .header-logo-text { font-size: 11px; letter-spacing: 0.16em; text-transform: uppercase; color: var(--cat-text); }
+  .back-btn {
+    display: flex; align-items: center; gap: 8px;
+    font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--cat-text); text-decoration: none; cursor: pointer;
+    border: 1px solid var(--cat-border); border-radius: 100px;
+    padding: 8px 18px; background: rgba(255,255,255,0.03);
+    transition: all 0.2s; opacity: 0;
+    animation: revUp 0.6s ease forwards 0.5s;
+  }
+  .back-btn:hover { background: rgba(255,255,255,0.07); color: var(--white); }
+
+  /* ── MAIN LAYOUT ── */
+  .main {
+    position: relative; z-index: 10;
+    min-height: 100vh;
+    display: flex; align-items: stretch; justify-content: center;
+    padding: 100px 40px 60px;
+    gap: 60px;
+  }
+
+  /* ── CARD VISUAL (left) ── */
+  .card-visual {
+    flex: 0 0 auto;
+    display: flex; align-items: center; justify-content: center;
+    opacity: 0; transform: translateX(-40px) rotate(-6deg);
+    animation: cardReveal 1s cubic-bezier(.22,.68,0,1.2) forwards 0.6s;
+  }
+  @keyframes cardReveal {
+    to { opacity: 1; transform: translateX(0) rotate(-2deg); }
+  }
+
+  .card-3d {
+    width: 220px; height: 300px;
+    border-radius: 20px;
+    background: linear-gradient(155deg, rgba(255,255,255,0.1) 0%, rgba(255,255,255,0.03) 100%);
+    border: 1px solid var(--cat-border);
+    display: flex; flex-direction: column; align-items: center; justify-content: flex-end;
+    padding: 28px 24px 32px;
+    position: relative; overflow: hidden;
+    box-shadow:
+      0 40px 80px rgba(0,0,0,0.6),
+      0 0 60px var(--cat-glow),
+      inset 0 1px 0 rgba(255,255,255,0.12);
+    backdrop-filter: blur(12px);
+  }
+  .card-3d::before {
+    content: ''; position: absolute; top: 0; left: 0; right: 0; height: 4px;
+    background: linear-gradient(90deg, var(--cat-primary), var(--cat-secondary));
+  }
+  .card-3d::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(255,255,255,0.12) 0%, transparent 50%);
+    border-radius: 20px;
+  }
+  .card-cat-label {
+    position: absolute; top: 20px; left: 20px;
+    font-size: 9px; letter-spacing: 0.18em; text-transform: uppercase;
+    color: var(--cat-text); opacity: 0.7;
+  }
+  .card-num {
+    position: absolute; top: 16px; right: 18px;
+    font-family: 'Cormorant Garamond', serif; font-size: 28px; font-weight: 300; font-style: italic;
+    color: rgba(255,255,255,0.1);
+  }
+  .card-big-icon { font-size: 56px; margin-bottom: 14px; filter: drop-shadow(0 4px 16px var(--cat-glow)); position: relative; z-index: 1; }
+  .card-name-label {
+    font-size: 13px; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--white); text-align: center; line-height: 1.3; position: relative; z-index: 1;
+  }
+  .card-virtue-label {
+    font-size: 10px; font-weight: 300; margin-top: 6px; color: var(--cat-text);
+    letter-spacing: 0.08em; text-align: center; position: relative; z-index: 1;
+  }
+
+  /* Ambient float */
+  .card-visual { animation: cardReveal 1s cubic-bezier(.22,.68,0,1.2) forwards 0.6s, cardFloat 5s ease-in-out infinite 1.8s; }
+  @keyframes cardFloat {
+    0%, 100% { transform: rotate(-2deg) translateY(0); }
+    50%       { transform: rotate(-1deg) translateY(-10px); }
+  }
+
+  /* ── CONTENT (right) ── */
+  .card-content {
+    flex: 1 1 0; max-width: 600px;
+    display: flex; flex-direction: column; justify-content: center;
+    padding: 20px 0;
+  }
+
+  .content-eyebrow {
+    font-size: 11px; letter-spacing: 0.22em; text-transform: uppercase;
+    color: var(--cat-text); margin-bottom: 12px;
+    opacity: 0; transform: translateY(16px);
+    animation: revUp 0.6s ease forwards 0.8s;
+  }
+  .content-title {
+    font-family: 'Cormorant Garamond', serif; font-weight: 300; font-style: italic;
+    font-size: clamp(48px, 5.5vw, 76px); line-height: 1.0;
+    background: linear-gradient(135deg, var(--white) 30%, var(--cat-secondary));
+    -webkit-background-clip: text; -webkit-text-fill-color: transparent; background-clip: text;
+    margin-bottom: 32px;
+    opacity: 0; transform: translateY(20px);
+    animation: revUp 0.9s cubic-bezier(.22,.68,0,1.2) forwards 1.0s;
+  }
+
+  /* Content blocks */
+  .content-block {
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 24px 0;
+    opacity: 0; transform: translateY(14px);
+  }
+  .content-block:nth-child(3) { animation: revUp 0.7s ease forwards 1.2s; }
+  .content-block:nth-child(4) { animation: revUp 0.7s ease forwards 1.4s; }
+  .content-block:nth-child(5) { animation: revUp 0.7s ease forwards 1.6s; }
+  .content-block:last-child   { border-bottom: 1px solid rgba(255,255,255,0.06); }
+
+  .block-label {
+    font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase;
+    color: var(--cat-text); margin-bottom: 10px; opacity: 0.75;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .block-label::after { content: ''; flex: 1; height: 1px; background: linear-gradient(90deg, var(--cat-border), transparent); }
+  .block-text {
+    font-size: 16px; font-weight: 300; line-height: 1.8; color: rgba(255,255,255,0.85);
+  }
+  .block-text.question {
+    font-family: 'Cormorant Garamond', serif; font-style: italic;
+    font-size: 20px; font-weight: 300; color: var(--white);
+    line-height: 1.4;
+  }
+  .block-text.micro {
+    font-size: 15px; color: rgba(255,255,255,0.7);
+    background: rgba(255,255,255,0.03);
+    border-left: 2px solid var(--cat-secondary);
+    padding: 14px 18px; border-radius: 0 8px 8px 0;
+  }
+
+  /* ── NAVIGATION ── */
+  .card-nav {
+    display: flex; align-items: center; gap: 14px;
+    margin-top: 36px;
+    opacity: 0; animation: revUp 0.7s ease forwards 1.8s;
+  }
+  .nav-btn {
+    display: flex; align-items: center; gap: 8px;
+    padding: 12px 22px; border-radius: 12px;
+    border: 1px solid var(--cat-border); background: rgba(255,255,255,0.04);
+    color: var(--cat-text); font-family: 'Outfit', sans-serif;
+    font-size: 12px; font-weight: 400; letter-spacing: 0.08em;
+    cursor: pointer; transition: all 0.2s; text-decoration: none;
+  }
+  .nav-btn:hover { background: rgba(255,255,255,0.09); color: var(--white); border-color: var(--cat-secondary); }
+  .nav-btn.primary {
+    background: linear-gradient(135deg, var(--cat-primary), var(--cat-secondary));
+    border-color: transparent; color: var(--white);
+    box-shadow: 0 8px 28px var(--cat-glow);
+  }
+  .nav-btn.primary:hover { transform: translateY(-2px); box-shadow: 0 14px 40px var(--cat-glow); }
+
+  /* ── SIDE MINI CARDS (all cards in category) ── */
+  .side-panel {
+    flex: 0 0 auto; width: 80px;
+    display: flex; flex-direction: column; align-items: center;
+    gap: 10px; padding: 20px 0;
+    opacity: 0; animation: revUp 0.8s ease forwards 1.4s;
+  }
+  .side-card {
+    width: 60px; height: 80px; border-radius: 10px;
+    border: 1px solid rgba(255,255,255,0.08);
+    background: rgba(255,255,255,0.03);
+    display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
+    cursor: pointer; transition: all 0.2s; padding: 8px;
+    text-decoration: none;
+  }
+  .side-card:hover { border-color: var(--cat-secondary); background: rgba(255,255,255,0.07); transform: scale(1.05); }
+  .side-card.active {
+    border-color: var(--cat-secondary); background: rgba(255,255,255,0.08);
+    box-shadow: 0 0 20px var(--cat-glow);
+  }
+  .side-card .sc-icon { font-size: 20px; }
+  .side-card .sc-name { font-size: 7px; color: rgba(255,255,255,0.5); text-align: center; line-height: 1.2; letter-spacing: 0.05em; }
+  .side-card.active .sc-name { color: var(--cat-text); }
+
+  /* ── ANIMATIONS ── */
+  @keyframes revUp  { to { opacity: 1; transform: translateY(0) rotate(0deg) translateX(0); } }
+  @keyframes revFade{ to { opacity: 1; } }
+</style>
+</head>
+<body data-cat="virtudes" id="page">
+
+<div class="bg"></div>
+<canvas id="ambient"></canvas>
+<div class="ring ring-1"></div>
+<div class="ring ring-2"></div>
+<div class="ring ring-3"></div>
+
+<!-- HEADER -->
+<header class="site-header">
+  <div class="header-logo" onclick="window.location.href='category.html'">
+    <svg viewBox="0 0 32 32" fill="none">
+      <path d="M16 2 L28 9 L28 23 L16 30 L4 23 L4 9 Z" stroke="rgba(196,181,253,0.7)" stroke-width="1.2" fill="none"/>
+      <path d="M16 7 L23 14 L16 21 L9 14 Z" stroke="rgba(196,181,253,0.4)" stroke-width="0.8" fill="none"/>
+      <circle cx="16" cy="14" r="3" fill="rgba(196,181,253,0.8)"/>
+    </svg>
+    <div class="header-logo-text">Conversaciones de Fortalezas Co<sup style="font-size:8px">3</sup></div>
+  </div>
+  <a class="back-btn" href="category.html">← Volver al explorador</a>
+</header>
+
+<!-- MAIN -->
+<div class="main" id="mainLayout">
+  <!-- SIDE CARDS -->
+  <aside class="side-panel" id="sidePanel"></aside>
+
+  <!-- CARD VISUAL -->
+  <div class="card-visual" id="cardVisual">
+    <div class="card-3d" id="card3d">
+      <span class="card-cat-label" id="cardCatLabel">Virtud</span>
+      <span class="card-num" id="cardNum">01</span>
+      <div class="card-big-icon" id="cardIcon">✨</div>
+      <div class="card-name-label" id="cardNameLabel">SABIDURÍA</div>
+      <div class="card-virtue-label" id="cardVirtueLabel">Virtud</div>
+    </div>
+  </div>
+
+  <!-- CONTENT -->
+  <div class="card-content" id="cardContent">
+    <p class="content-eyebrow" id="contentEyebrow">Virtud · Sabiduría</p>
+    <h1 class="content-title" id="contentTitle">Sabiduría</h1>
+
+    <div class="content-block" id="blockPower">
+      <p class="block-label">El poder de esta fortaleza</p>
+      <p class="block-text" id="textPower">...</p>
+    </div>
+
+    <div class="content-block" id="blockQuestion">
+      <p class="block-label">Pregunta generativa</p>
+      <p class="block-text question" id="textQuestion">...</p>
+    </div>
+
+    <div class="content-block" id="blockMicro">
+      <p class="block-label">Micropráctica</p>
+      <p class="block-text micro" id="textMicro">...</p>
+    </div>
+
+    <div class="card-nav" id="cardNav">
+      <button class="nav-btn" id="btnPrev" onclick="navigateCard(-1)">← Anterior</button>
+      <button class="nav-btn" id="btnNext" onclick="navigateCard(1)">Siguiente →</button>
+      <a class="nav-btn primary" href="category.html">Ver todas las cartas</a>
+    </div>
+  </div>
+</div>
+
+<script>
+// ── FULL DATA (same as category.html) ──
+const CATEGORIES = {
+  virtudes: {
+    title: 'Virtudes y Fortalezas',
+    cards: [
+      { icon:'🌟', name:'Sabiduría',     virtue:'Virtud',       power:'La capacidad de comprender la vida en profundidad, integrando experiencia, reflexión y discernimiento para orientar a otros y a uno mismo.',   question:'¿En qué momento tu sabiduría transformó una dificultad en aprendizaje?', micro:'Esta semana, identifica una situación difícil del pasado y escribe qué aprendiste de ella. Compártelo con alguien de tu equipo.' },
+      { icon:'🦁', name:'Coraje',        virtue:'Virtud',       power:'La fuerza interior para actuar desde la autenticidad, incluso cuando el camino es incierto o el entorno no acompaña.',                         question:'¿Qué acción valiente te ha acercado más a quien realmente eres?', micro:'Identifica algo que necesitas decir y que has postergado por miedo. Hazlo hoy, con honestidad y cuidado.' },
+      { icon:'💚', name:'Humanidad',     virtue:'Virtud',       power:'La capacidad de amar, conectar y cuidar con genuina presencia y empatía, creando lazos que sostienen al equipo.',                               question:'¿Cuándo sentiste que tu humanidad hizo la diferencia en alguien?', micro:'Hoy, dedica dos minutos a escuchar a alguien sin interrumpir, sin dar soluciones. Solo estar presente.' },
+      { icon:'⚖️', name:'Justicia',      virtue:'Virtud',       power:'El compromiso de actuar con equidad, responsabilidad y respeto por el bien común, más allá del interés personal.',                              question:'¿Cómo tu sentido de justicia guía tus decisiones cotidianas?', micro:'En tu próxima reunión, asegúrate de que todas las voces sean escuchadas antes de tomar una decisión.' },
+      { icon:'🌊', name:'Templanza',     virtue:'Virtud',       power:'La capacidad de equilibrar las emociones y acciones, actuando desde la serenidad y la moderación incluso bajo presión.',                         question:'¿En qué área de tu vida la templanza te ha dado mayor claridad?', micro:'Antes de responder en un momento tenso, haz tres respiraciones profundas y observa cómo cambia tu perspectiva.' },
+      { icon:'✨', name:'Trascendencia', virtue:'Virtud',       power:'La conexión con algo más grande: el propósito, la belleza, la gratitud y el sentido de la vida que va más allá de lo cotidiano.',               question:'¿Qué te conecta con algo más grande que tú mismo?', micro:'Escribe una frase que describa el propósito más profundo de tu trabajo. Léela cada mañana durante una semana.' },
+    ]
+  },
+  fortalezas: {
+    title: 'Fortalezas',
+    cards: [
+      { icon:'🔍', name:'Curiosidad',         virtue:'Sabiduría',   power:'El amor por aprender y explorar lo nuevo, abriendo puertas a posibilidades inesperadas que enriquecen la conversación y la innovación.',  question:'¿Cuándo tu curiosidad te llevó a un descubrimiento que cambió algo?', micro:'Hoy, haz una pregunta que normalmente no harías. Escucha la respuesta con genuina apertura.' },
+      { icon:'🧩', name:'Creatividad',        virtue:'Sabiduría',   power:'La capacidad de generar ideas originales y transformar lo ordinario en extraordinario, conectando elementos que otros no ven.',              question:'¿Cómo tu creatividad ha resuelto un desafío que parecía imposible?', micro:'Frente al próximo problema, genera al menos 5 soluciones diferentes antes de elegir la primera que se te ocurra.' },
+      { icon:'💡', name:'Perspectiva',        virtue:'Sabiduría',   power:'Ver el cuadro completo y ofrecer una mirada que orienta y da sentido a los demás, integrando múltiples puntos de vista.',                  question:'¿En qué momento tu perspectiva cambió el rumbo de una situación?', micro:'Esta semana, antes de opinar, pregunta a tres personas con visiones distintas. Integra lo que escuchas.' },
+      { icon:'🔥', name:'Valentía',           virtue:'Coraje',      power:'Actuar con decisión frente al miedo, sabiendo que el crecimiento está al otro lado de la incomodidad y la incertidumbre.',                 question:'¿Qué acto de valentía te enorgullece más hoy?', micro:'Identifica una conversación que has evitado por miedo. Agéndala esta semana. El coraje comienza con un paso.' },
+      { icon:'💎', name:'Autenticidad',       virtue:'Coraje',      power:'Vivir con coherencia entre lo que piensas, sientes y haces, expresando con honestidad tu esencia sin máscaras.',                            question:'¿Cómo expresas tu autenticidad cuando el entorno no lo facilita?', micro:'Antes de tomar una decisión importante, pregúntate: ¿Esto me representa auténticamente? ¿Soy fiel a mis valores?' },
+      { icon:'🌱', name:'Perseverancia',      virtue:'Coraje',      power:'La capacidad de sostenerte en el esfuerzo y avanzar a pesar de los obstáculos, encontrando nuevas rutas cuando la primera se cierra.',      question:'¿Qué proyecto abandonarías si no tuvieras perseverancia?', micro:'Esta semana, avanza un paso en algo que hayas postergado. La perseverancia se construye con acciones pequeñas y constantes.' },
+      { icon:'💞', name:'Amor',               virtue:'Humanidad',   power:'La fortaleza de conectar genuinamente con otros desde el cuidado, la reciprocidad y la presencia plena que fortalece los vínculos.',         question:'¿Cómo el amor que das transforma las relaciones a tu alrededor?', micro:'Hoy, expresa con palabras el aprecio que sientes por alguien del equipo. Sé específico: nombra lo que valoras de esa persona.' },
+      { icon:'🤝', name:'Amabilidad',         virtue:'Humanidad',   power:'El placer de dar, ayudar y contribuir al bienestar de los demás sin esperar nada a cambio, creando un clima de generosidad.',               question:'¿Cuándo una pequeña amabilidad tuya generó un gran impacto?', micro:'Esta semana, realiza un acto de amabilidad invisible: ayuda a alguien sin que lo sepa, solo por el placer de hacerlo.' },
+      { icon:'🧠', name:'Intel. Social',      virtue:'Humanidad',   power:'La capacidad de leer las emociones y necesidades de los demás con precisión y empatía, ajustando tu comunicación a cada persona.',          question:'¿Cómo tu inteligencia social ha facilitado conversaciones difíciles?', micro:'Antes de tu próxima conversación importante, pregúntate: ¿Qué está sintiendo esta persona? ¿Qué necesita?' },
+      { icon:'🌍', name:'Trabajo en equipo',  virtue:'Justicia',    power:'La habilidad de colaborar, complementar fortalezas y crear algo mayor que la suma de las partes, poniendo el bien común primero.',           question:'¿Qué hace que un equipo contigo sea mejor que sin ti?', micro:'Esta semana, identifica una fortaleza de un compañero y díselo. Reconocer lo que otros aportan es el primer paso del trabajo en equipo.' },
+    ]
+  },
+  caminos: {
+    title: 'Caminos Co³',
+    cards: [
+      { icon:'🌐', name:'Conectar',           virtue:'Camino 1',   power:'Abre espacios de confianza y vínculo genuino. Es el primer paso de toda conversación viva: crear las condiciones para que emerja lo auténtico.',  question:'¿Qué necesitas para sentirte verdaderamente conectado en este equipo?', micro:'Inicia tu próxima reunión con 60 segundos de silencio intencional. Luego, pide que cada persona comparta una palabra de cómo llega hoy.' },
+      { icon:'🔗', name:'Sombras Luminosas',  virtue:'Conectar',   power:'Transformar lo que parece negativo en fuente de aprendizaje y conexión. Las sombras revelan las fortalezas que aún no hemos nombrado.',          question:'¿Qué dificultad reciente te ha enseñado algo valioso sobre ti?', micro:'Comparte con el equipo una dificultad actual y pide que te ayuden a ver qué fortaleza esconde esa situación.' },
+      { icon:'🎁', name:'Dones Cotidianos',   virtue:'Conectar',   power:'Reconocer los talentos invisibles que cada persona aporta al equipo cada día, pero que rara vez se nombran o celebran.',                        question:'¿Qué don de un colega rara vez se nombra pero siempre está presente?', micro:'Escribe un don invisible de cada miembro del equipo. Compártelos en la próxima reunión y observa qué sucede.' },
+      { icon:'🏗️', name:'Construir',          virtue:'Camino 2',   power:'Impulsa la colaboración y la visión compartida. Es el espacio donde los sueños se vuelven planes y los planes se vuelven movimiento colectivo.', question:'¿Qué necesitamos construir juntos para llegar donde queremos ir?', micro:'Dibuja con el equipo una imagen del futuro ideal en 6 meses. No uses palabras, solo imágenes y metáforas.' },
+      { icon:'🔭', name:'Visión Compartida',  virtue:'Construir',  power:'Crear una imagen del futuro que inspire y oriente las acciones del equipo, convirtiendo el propósito en una brújula colectiva.',                 question:'¿Cómo sería nuestro equipo en su mejor versión dentro de un año?', micro:'Pide que cada persona complete esta frase: "En un año, nuestro equipo será reconocido por..."' },
+      { icon:'🎯', name:'Concretar',          virtue:'Camino 3',   power:'Orienta hacia acuerdos, decisiones y acción. Convierte la energía conversacional en movimiento real, compromisos claros y resultados.',          question:'¿Cuál es el primer paso concreto que podemos dar hoy?', micro:'Al final de cada reunión, cierra con: "¿Cuál es el próximo paso? ¿Quién lo hace? ¿Cuándo?" Escríbelo y hazlo visible.' },
+      { icon:'🌱', name:'Rumbo Compartido',   virtue:'Concretar',  power:'Definir compromisos claros que todos puedan sostener con convicción, alineando el equipo hacia una misma dirección.',                           question:'¿Qué compromiso quieres hacer hoy frente al equipo?', micro:'Cada miembro formula un compromiso en voz alta ante el equipo. La declaración pública activa el poder de la responsabilidad compartida.' },
+      { icon:'🎉', name:'Alianzas',           virtue:'Concretar',  power:'Celebrar los logros y fortalecer los vínculos que los hicieron posibles, reconociendo que el éxito es siempre colectivo.',                      question:'¿Qué alianza en tu equipo merece ser celebrada hoy?', micro:'Dedica los últimos 5 minutos de tu próxima reunión a celebrar un logro del equipo, por pequeño que parezca.' },
+      { icon:'🌀', name:'Universos Paralelos',virtue:'Conectar',   power:'Explorar perspectivas radicalmente distintas para expandir la visión del equipo y descubrir posibilidades que no veíamos desde nuestra lente.',  question:'¿Qué verías si miraras esta situación desde los ojos de alguien completamente diferente a ti?', micro:'Elige un desafío actual y pide al equipo que lo mire desde la perspectiva de un cliente, un niño, o alguien del futuro.' },
+      { icon:'💫', name:'Lado B',             virtue:'Conectar',   power:'Explorar el reverso de las situaciones difíciles para descubrir aprendizajes ocultos, recursos inesperados y fortalezas emergentes.',            question:'¿Qué está intentando enseñarte esta dificultad?', micro:'Escribe la situación que más te está costando. Luego, escribe tres dones que te está dando. Compártelo con alguien de confianza.' },
+    ]
+  },
+  neurotips: {
+    title: 'Neurotips',
+    cards: [
+      { icon:'⚡', name:'El Conflicto es Energía',    virtue:'Neurotip', power:'El conflicto activa el sistema nervioso. Cuando aprendemos a usarlo como combustible en lugar de amenaza, se convierte en motor de innovación.',      question:'¿Qué conflicto reciente podría ser una fuente de energía creativa?', micro:'La próxima vez que surja tensión, di en voz alta: "Esta tensión tiene información valiosa. ¿Qué nos está diciendo?" Observa lo que emerge.' },
+      { icon:'💬', name:'Nombrar lo que Sentimos',    virtue:'Neurotip', power:'Poner nombre a las emociones activa la corteza prefrontal y reduce la intensidad de la amígdala, abriendo espacio para la acción consciente.',         question:'¿Qué emoción presente necesita ser nombrada en tu equipo hoy?', micro:'Al inicio de una reunión difícil, pide que cada persona comparta en una palabra cómo está llegando emocionalmente. El simple acto de nombrarlo cambia la dinámica.' },
+      { icon:'🌬️', name:'Respiración que Regula',    virtue:'Neurotip', power:'La respiración consciente activa el sistema nervioso parasimpático y restaura la calma en segundos, preparando el cerebro para el diálogo genuino.',  question:'¿Cuándo una pausa respiratoria podría transformar una reunión?', micro:'Antes de conversaciones importantes, practica 4-7-8: inhala 4 segundos, sostén 7, exhala 8. Repite 3 veces. Invita al equipo a hacerlo contigo.' },
+      { icon:'🗣️', name:'Lenguaje que Transforma',   virtue:'Neurotip', power:'Las palabras que elegimos moldean la realidad que creamos. El lenguaje apreciativo activa el sistema de recompensa y expande el pensamiento.',         question:'¿Qué palabra cambiarías en tus conversaciones para activar más energía?', micro:'Durante una semana, cambia "sí, pero" por "sí, y además". Observa cómo cambia la energía de las conversaciones.' },
+      { icon:'🧭', name:'Propósito que Guía',         virtue:'Neurotip', power:'Conectar con el por qué activa la dopamina y la motivación sostenida. El propósito es el mejor combustible para la acción consciente y el bienestar.',  question:'¿Cuál es el propósito más profundo que guía tu trabajo hoy?', micro:'Completa esta frase con tu equipo: "Lo que hacemos importa porque..." Lee las respuestas en voz alta. El propósito se activa cuando se nombra.' },
+    ]
+  },
+  rituales: {
+    title: 'Prácticas Rituales',
+    cards: [
+      { icon:'🤲', name:'Ritual de Bienvenida',         virtue:'Ritual', power:'Crear un umbral simbólico que invite a las personas a llegar presentes y disponibles, dejando fuera las distracciones y llegando al encuentro.',   question:'¿Cómo sería el comienzo de tus reuniones si iniciaran con un ritual de presencia?', micro:'Diseña un ritual de inicio con tu equipo: puede ser una palabra, una respiración o una pregunta de llegada. Practícalo durante 21 días.' },
+      { icon:'🧹', name:'Ritual de Limpieza',           virtue:'Ritual', power:'Liberar tensiones acumuladas para entrar al encuentro con la energía renovada. Lo que soltamos antes de conversar determina la calidad del diálogo.', question:'¿Qué necesitas soltar antes de esta conversación para estar completamente presente?', micro:'Antes de una reunión importante, pide a cada persona que escriba en un papel lo que quiere dejar fuera. Dóblenlo y déjenlo fuera de la sala.' },
+      { icon:'🌿', name:'Ritual de Renovación',         virtue:'Ritual', power:'Marcar simbólicamente el comienzo de un nuevo ciclo con intención y presencia colectiva. Los rituales de renovación activan la esperanza.',         question:'¿Qué nuevo comienzo quieres marcar hoy con tu equipo?', micro:'Al iniciar un nuevo proyecto o etapa, crea un ritual de intención: que cada persona comparta una palabra que quiere encarnar en este nuevo ciclo.' },
+      { icon:'🎓', name:'Ritual de Aprender Enseñando', virtue:'Ritual', power:'Integrar lo aprendido compartiéndolo. Enseñar profundiza el aprendizaje propio y fortalece el vínculo al hacer del conocimiento algo colectivo.',   question:'¿Qué aprendizaje reciente podrías compartir con tu equipo hoy?', micro:'En la próxima reunión, dedica 5 minutos a que un miembro comparta algo que aprendió recientemente, de cualquier fuente.' },
+      { icon:'🫱', name:'Ritual de Pedir y Ofrecer',    virtue:'Ritual', power:'Cultivar la reciprocidad como práctica viva: nombrar lo que necesitamos y lo que podemos dar, creando un ecosistema de apoyo mutuo consciente.', question:'¿Qué necesitas del equipo hoy? ¿Qué puedes ofrecer?', micro:'En una reunión, crea dos rondas: "Hoy necesito..." y "Hoy puedo ofrecer...". Observa cómo la reciprocidad fortalece el vínculo.' },
+    ]
+  }
+};
+
+// ── PARSE URL ──
+const params  = new URLSearchParams(window.location.search);
+const catKey  = params.get('cat') || 'virtudes';
+const startIdx = parseInt(params.get('idx') || '0', 10);
+let currentIdx = isNaN(startIdx) ? 0 : startIdx;
+
+const cat = CATEGORIES[catKey] || CATEGORIES.virtudes;
+document.getElementById('page').dataset.cat = catKey;
+
+// ── AMBIENT PARTICLES ──
+const cv = document.getElementById('ambient');
+const cx = cv.getContext('2d');
+function rsz() { cv.width = window.innerWidth; cv.height = window.innerHeight; }
+rsz(); window.addEventListener('resize', rsz);
+const pp = [];
+for (let i = 0; i < 80; i++) pp.push({
+  x: Math.random() * window.innerWidth, y: Math.random() * window.innerHeight,
+  r: Math.random() * 1.6 + 0.3, vx: (Math.random() - 0.5) * 0.18,
+  vy: -(Math.random() * 0.22 + 0.05), a: 0.2, p: Math.random() * Math.PI * 2
+});
+function anim() {
+  cx.clearRect(0, 0, cv.width, cv.height);
+  pp.forEach(p => {
+    p.x += p.vx; p.y += p.vy; p.p += 0.013;
+    p.a = Math.sin(p.p) * 0.1 + 0.15;
+    if (p.y < -5) p.y = cv.height + 5;
+    cx.beginPath(); cx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+    cx.fillStyle = `rgba(196,181,253,${p.a})`; cx.fill();
+  });
+  requestAnimationFrame(anim);
+}
+anim();
+
+// ── BUILD SIDE PANEL ──
+function buildSidePanel() {
+  const panel = document.getElementById('sidePanel');
+  panel.innerHTML = '';
+  cat.cards.forEach((card, i) => {
+    const el = document.createElement('div');
+    el.className = 'side-card' + (i === currentIdx ? ' active' : '');
+    el.innerHTML = `<span class="sc-icon">${card.icon}</span><span class="sc-name">${card.name.replace(/\n/g,' ').substring(0,12)}</span>`;
+    el.addEventListener('click', () => loadCard(i));
+    panel.appendChild(el);
+  });
+}
+
+// ── LOAD CARD ──
+function loadCard(idx) {
+  currentIdx = Math.max(0, Math.min(idx, cat.cards.length - 1));
+  const card = cat.cards[currentIdx];
+
+  // Animate out then in
+  const content = document.getElementById('cardContent');
+  const visual  = document.getElementById('card3d');
+  content.style.opacity = '0'; content.style.transform = 'translateY(10px)';
+  visual.style.opacity = '0'; visual.style.transform = 'scale(0.95)';
+
+  setTimeout(() => {
+    // Update card visual
+    document.getElementById('cardIcon').textContent      = card.icon;
+    document.getElementById('cardNameLabel').textContent = card.name.replace(/\n/g,' ').toUpperCase();
+    document.getElementById('cardVirtueLabel').textContent = card.virtue;
+    document.getElementById('cardCatLabel').textContent  = card.virtue;
+    document.getElementById('cardNum').textContent       = String(currentIdx + 1).padStart(2, '0');
+
+    // Update content
+    document.getElementById('contentEyebrow').textContent = `${card.virtue} · ${cat.title}`;
+    document.getElementById('contentTitle').textContent   = card.name.replace(/\n/g,' ');
+    document.getElementById('textPower').textContent      = card.power;
+    document.getElementById('textQuestion').textContent   = card.question;
+    document.getElementById('textMicro').textContent      = card.micro;
+
+    // Update nav buttons
+    document.getElementById('btnPrev').disabled = currentIdx === 0;
+    document.getElementById('btnNext').disabled = currentIdx === cat.cards.length - 1;
+    document.getElementById('btnPrev').style.opacity = currentIdx === 0 ? '0.35' : '1';
+    document.getElementById('btnNext').style.opacity = currentIdx === cat.cards.length - 1 ? '0.35' : '1';
+
+    // Animate in
+    visual.style.transition  = 'all 0.5s cubic-bezier(.22,.68,0,1.2)';
+    content.style.transition = 'all 0.5s ease';
+    visual.style.opacity  = '1'; visual.style.transform  = 'scale(1)';
+    content.style.opacity = '1'; content.style.transform = 'translateY(0)';
+
+    // Update URL
+    const url = new URL(window.location);
+    url.searchParams.set('idx', currentIdx);
+    window.history.replaceState({}, '', url);
+
+    // Update side panel
+    document.querySelectorAll('.side-card').forEach((sc, i) => sc.classList.toggle('active', i === currentIdx));
+  }, 200);
+}
+
+function navigateCard(dir) {
+  loadCard(currentIdx + dir);
+}
+
+// ── KEYBOARD NAV ──
+document.addEventListener('keydown', e => {
+  if (e.key === 'ArrowRight' || e.key === 'ArrowDown') navigateCard(1);
+  if (e.key === 'ArrowLeft'  || e.key === 'ArrowUp')   navigateCard(-1);
+  if (e.key === 'Escape') window.location.href = 'category.html';
+});
+
+// ── INIT ──
+buildSidePanel();
+loadCard(currentIdx);
+</script>
+</body>
+</html>
